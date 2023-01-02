@@ -1,0 +1,59 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:avalonia="clr-namespace:MupenUtilitiesRedux.Views.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="MupenUtilitiesRedux.Views.Avalonia.UserControls.HeaderPage"
+             x:DataType="avalonia:MainWindow">
+    <UserControl.Resources>
+        <Thickness x:Key="HeaderMargin">0 10 0 10</Thickness>
+        <Thickness x:Key="LabelMargin">0 0 5 0</Thickness>
+    </UserControl.Resources>
+    <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <TextBlock Text="{CompiledBinding LocalizationManagerViewModel.LocalizationData.Creator}" FontSize="23"
+                       Margin="{StaticResource HeaderMargin}" />
+            <Grid RowDefinitions="Auto,Auto,Auto" IsSharedSizeScope="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="LabelColumn" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Grid.Row="0"
+                           Text="{CompiledBinding LocalizationManagerViewModel.LocalizationData.Author}"
+                           VerticalAlignment="Center" Margin="{StaticResource LabelMargin}" />
+                <TextBox Grid.Column="1" Grid.Row="0"
+                         Text="{CompiledBinding MainViewModel.CurrentMovie.Author, Mode=TwoWay}" />
+                <TextBlock Grid.Column="0" Grid.Row="1"
+                           Text="{CompiledBinding LocalizationManagerViewModel.LocalizationData.Description}"
+                           VerticalAlignment="Center" Margin="{StaticResource LabelMargin}" />
+                <TextBox Grid.Column="1" Grid.Row="1"
+                         Text="{CompiledBinding MainViewModel.CurrentMovie.Description, Mode=TwoWay}" />
+
+            </Grid>
+            <TextBlock Text="{CompiledBinding LocalizationManagerViewModel.LocalizationData.Tas}" FontSize="23"
+                       Margin="{StaticResource HeaderMargin}" />
+            <Grid RowDefinitions="Auto,Auto,Auto" IsSharedSizeScope="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="LabelColumn" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Grid.Row="0"
+                           Text="{CompiledBinding LocalizationManagerViewModel.LocalizationData.Frames}"
+                           VerticalAlignment="Center" Margin="{StaticResource LabelMargin}" />
+                <TextBox Grid.Column="1" Grid.Row="0"
+                         Text="{CompiledBinding MainViewModel.CurrentMovie.Frames, Mode=TwoWay}" IsReadOnly="True" />
+                <TextBlock Grid.Column="0" Grid.Row="1"
+                           Text="{CompiledBinding LocalizationManagerViewModel.LocalizationData.Rerecords}"
+                           VerticalAlignment="Center" Margin="{StaticResource LabelMargin}" />
+                <TextBox Grid.Column="1" Grid.Row="1"
+                         Text="{CompiledBinding MainViewModel.CurrentMovie.Rerecords, Mode=TwoWay}" />
+
+            </Grid>
+        </StackPanel>
+
+    </ScrollViewer>
+
+</UserControl>

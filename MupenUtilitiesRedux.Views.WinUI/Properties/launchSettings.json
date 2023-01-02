@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "MupenUtilitiesRedux.Views.WinUI (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "MupenUtilitiesRedux.Views.WinUI (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

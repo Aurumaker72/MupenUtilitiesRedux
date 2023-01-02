@@ -1,0 +1,16 @@
+﻿{
+  "File": "File",
+  "Help": "Help",
+  "Header": "Header",
+  "Frames": "Frames",
+  "Replacement": "Replacement",
+  "FileReadFailure": "The file's contents couldn\u0027st be read",
+  "Load": "Load",
+  "Save": "Save",
+  "Languages": "Languages",
+  "Author": "Author",
+  "Description": "Description",
+  "Tas":  "TAS",
+  "Creator": "Creator",
+  "Rerecords":  "Rerecords"
+}

@@ -1,0 +1,11 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="MupenUtilitiesRedux.Views.Avalonia.App"
+             xmlns:sty="using:FluentAvalonia.Styling">
+    <Application.Styles>
+        <!--<themes:MaterialTheme BaseTheme="Light" PrimaryColor="Purple" SecondaryColor="Lime" />-->
+        <sty:FluentAvaloniaTheme />
+
+
+    </Application.Styles>
+</Application>
