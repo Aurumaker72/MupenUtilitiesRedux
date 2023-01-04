@@ -9,7 +9,8 @@
   A .NET M64 library
 </p>
 <p align="center">
-    <img src="https://img.shields.io/badge/We%20need-Actual%20UI%20Designers-orange?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/.NET-7-blue?style=for-the-badge"/>
+    <img src="https://img.shields.io/badge/Frontends-WPF,%20Avalonia-teal?style=for-the-badge"/>
 </p>
 
 
