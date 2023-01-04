@@ -6,7 +6,7 @@
   Mupen Utilities Redux
 </h1>
 <p align="center">
-  A .NET M64 library
+  .NET application for M64 file interaction  
 </p>
 <p align="center">
 <img src="https://img.shields.io/badge/.NET-7-blue?style=for-the-badge"/>
