@@ -16,80 +16,97 @@ namespace MupenUtilitiesRedux.Views.WPF.Services;
 /// </summary>
 public sealed class FilesService : IFilesService
 {
-	/// <inheritdoc />
-	public string InstallationPath => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
+    /// <inheritdoc />
+    public string InstallationPath => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
 
-	/// <inheritdoc />
-	public string TemporaryFilesPath => Path.GetTempPath();
+    /// <inheritdoc />
+    public string TemporaryFilesPath => Path.GetTempPath();
 
-	/// <inheritdoc />
-	public async Task<IFile> GetFileFromPathAsync(string path)
-	{
-		return new File(path);
-	}
+    /// <inheritdoc />
+    public async Task<IFile> GetFileFromPathAsync(string path)
+    {
+        return new File(path);
+    }
 
-	/// <inheritdoc />
-	public async Task<IFile?> TryGetFileFromPathAsync(string path)
-	{
-		try
-		{
-			return await GetFileFromPathAsync(path);
-		}
-		catch (FileNotFoundException)
-		{
-			return null;
-		}
-	}
+    /// <inheritdoc />
+    public async Task<IFile?> TryGetFileFromPathAsync(string path)
+    {
+        try
+        {
+            return await GetFileFromPathAsync(path);
+        }
+        catch (FileNotFoundException)
+        {
+            return null;
+        }
+    }
 
-	/// <inheritdoc />
-	public async Task<IFile> CreateOrOpenFileFromPathAsync(string path)
-	{
-		var folderPath = Path.GetDirectoryName(path);
-		var filename = Path.GetFileName(path);
+    /// <inheritdoc />
+    public async Task<IFile> CreateOrOpenFileFromPathAsync(string path)
+    {
+        var folderPath = Path.GetDirectoryName(path);
+        var filename = Path.GetFileName(path);
 
-		if (folderPath != null && !Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
+        if (folderPath != null && !Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
 
-		if (!System.IO.File.Exists(path)) System.IO.File.Create(path);
+        if (!System.IO.File.Exists(path)) System.IO.File.Create(path);
 
-		return new File(path);
-	}
+        return new File(path);
+    }
 
-	/// <inheritdoc />
-	public async Task<IFile?> TryPickOpenFileAsync(string[] extensions)
-	{
-		var fileDialog = new OpenFileDialog
-		{
-			AddExtension = true,
-			CheckFileExists = true,
-			CheckPathExists = true
-			//Filter = 
-		};
-		var result = fileDialog.ShowDialog();
+    /// <inheritdoc />
+    public async Task<IFile?> TryPickOpenFileAsync(string[] extensions)
+    {
+        var fileDialog = new OpenFileDialog
+        {
+            AddExtension = true,
+            CheckFileExists = true,
+            CheckPathExists = true
+            //Filter = 
+        };
+        var result = fileDialog.ShowDialog();
 
-		if (result != null && result.Value)
-			return new File(fileDialog.FileName);
-		return null;
-	}
+        if (result != null && result.Value)
+            return new File(fileDialog.FileName);
+        return null;
+    }
 
-	/// <inheritdoc />
-	public async Task<IFile?> TryPickSaveFileAsync(string filename, (string Name, string[] Extensions) fileType)
-	{
-		var fileDialog = new SaveFileDialog
-		{
-			AddExtension = true
-			//Filter = 
-		};
-		var result = fileDialog.ShowDialog();
+    /// <inheritdoc />
+    public async Task<IFile?> TryPickSaveFileAsync(string filename, (string Name, string[] Extensions) fileType)
+    {
+        var fileDialog = new SaveFileDialog
+        {
+            AddExtension = true
+            //Filter = 
+        };
+        var result = fileDialog.ShowDialog();
 
-		if (result != null && result.Value)
-			return new File(fileDialog.FileName);
-		return null;
-	}
+        if (result != null && result.Value)
+            return new File(fileDialog.FileName);
+        return null;
+    }
 
-	/// <inheritdoc />
-	public async IAsyncEnumerable<(IFile, string)> GetFutureAccessFilesAsync()
-	{
-		yield return await Task.FromResult<(IFile, string)>((null, null));
-		throw new NotImplementedException();
-	}
+    /// <inheritdoc />
+    public async IAsyncEnumerable<(IFile, string)> GetFutureAccessFilesAsync()
+    {
+        yield return await Task.FromResult<(IFile, string)>((null, null));
+        throw new NotImplementedException();
+    }
+
+    public Task<bool> IsAccessible(string path)
+    {
+        try
+        {
+            using (var file = System.IO.File.OpenRead(path))
+            {
+
+            }
+
+            return Task.FromResult(true);
+        }
+        catch
+        {
+            return Task.FromResult(false);
+        }
+    }
 }

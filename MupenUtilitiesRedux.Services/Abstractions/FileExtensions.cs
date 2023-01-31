@@ -3,7 +3,7 @@
 namespace MupenUtilitiesRedux.Services.Abstractions;
 
 /// <summary>
-///     An extension <see langword="class" /> which provides wrapper functions for <see cref="IFile" />
+///     An extension <see cref="class" /> which provides wrapper functions for <see cref="IFile" />
 /// </summary>
 public static class FileExtensions
 {
@@ -16,31 +16,16 @@ public static class FileExtensions
 	{
 		var stream = await file.OpenStreamForReadAsync();
 
+		if (stream == null) return await Task.FromResult<byte[]?>(null);
+
 		var fileProperties = await file.GetPropertiesAsync();
 		var buffer = new byte[fileProperties.Size];
 
-		await using (stream)
+		using (stream)
 		{
-			// FIXME: verify that enough bytes were read
-			var read = stream.Read(buffer, 0, buffer.Length);
-			if (read != buffer.Length) return null;
+			stream.Read(buffer, 0, buffer.Length);
 		}
 
 		return buffer;
-	}
-
-
-	/// <summary>
-	///     Reads an <see cref="IFile" />'s into a <see cref="string" /> and returns it
-	/// </summary>
-	/// <param name="file">The <see cref="IFile" /> to be read</param>
-	/// <returns>The <paramref name="file" />'s contents as a <see cref="string" /></returns>
-	public static async Task<string?> ReadAllText(this IFile file, Encoding encoding)
-	{
-		var bytes = await ReadAllBytes(file);
-
-		if (bytes != null) return encoding.GetString(bytes);
-
-		return null;
 	}
 }

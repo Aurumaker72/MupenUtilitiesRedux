@@ -1,12 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using MupenUtilitiesRedux.Models;
 using MupenUtilitiesRedux.Models.Interfaces;
 using MupenUtilitiesRedux.Models.Options;
 using MupenUtilitiesRedux.Models.Serializers;
 using MupenUtilitiesRedux.Services;
 using MupenUtilitiesRedux.Services.Abstractions;
-using MupenUtilitiesRedux.ViewModels.Localization;
 
 namespace MupenUtilitiesRedux.ViewModels;
 
@@ -15,57 +13,60 @@ namespace MupenUtilitiesRedux.ViewModels;
 /// </summary>
 public partial class MainViewModel : ObservableObject
 {
-	private readonly IDialogService _dialogService;
-	private readonly IFilesService _filesService;
-	private readonly LocalizationManagerViewModel _localizationManagerViewModel;
-	private readonly ITimerService _timerService;
+    private readonly IDialogService _dialogService;
+    private readonly IFilesService _filesService;
+    private readonly ITimerService _timerService;
+    private readonly ILocalizationService _localizationService;
 
-	private IMovieSerializer _movieSerializer;
-	
-	public MainViewModel(LocalizationManagerViewModel localizationManagerViewModel, IFilesService filesService,
-		IDialogService dialogService, ITimerService timerService)
-	{
-		_filesService = filesService;
-		_dialogService = dialogService;
-		_timerService = timerService;
-		_localizationManagerViewModel = localizationManagerViewModel;
-		_movieSerializer = new ReflectionMovieSerializer();
-	}
+    private readonly IMovieSerializer _movieSerializer;
 
-	public MovieViewModel? CurrentMovie { get; private set; }
-	public bool IsMovieLoaded => CurrentMovie != null;
+    public MainViewModel(IFilesService filesService,
+        IDialogService dialogService, ITimerService timerService, ILocalizationService localizationService)
+    {
+        _filesService = filesService;
+        _dialogService = dialogService;
+        _timerService = timerService;
+        _localizationService = localizationService;
 
-	[RelayCommand]
-	private async void LoadMovie()
-	{
-		var file = await _filesService.TryPickOpenFileAsync(new[] { "m64" });
+        _movieSerializer = new ReflectionMovieSerializer();
+    }
 
-		if (file == null) return;
+    public MovieViewModel? CurrentMovie { get; private set; }
+    public bool IsMovieLoaded => CurrentMovie != null;
 
-		var bytes = await file.ReadAllBytes();
+    [RelayCommand]
+    private async Task LoadMovie()
+    {
+        var file = await _filesService.TryPickOpenFileAsync(new[] { "m64" });
 
-		if (bytes == null) _dialogService.ShowError(_localizationManagerViewModel.LocalizationData.FileReadFailure);
+        if (file == null) return;
 
-		var movie = _movieSerializer.Deserialize(bytes,
-			new MovieDeserializationOptions { SimplifyNullTerminators = true });
+        var bytes = await file.ReadAllBytes();
 
-		CurrentMovie = new MovieViewModel(movie, _timerService);
-		OnPropertyChanged(nameof(CurrentMovie));
-		OnPropertyChanged(nameof(IsMovieLoaded));
-		SaveMovieCommand.NotifyCanExecuteChanged();
-	}
+        _dialogService.ShowError(_localizationService.GetStringOrDefault("Movie load failed"));
 
-	[RelayCommand(CanExecute = nameof(IsMovieLoaded))]
-	private async void SaveMovie()
-	{
-		var file = await _filesService.TryPickSaveFileAsync("movie", ("Movie", new[] { "m64" }));
+        var movie = _movieSerializer.Deserialize(bytes,
+            new MovieDeserializationOptions { SimplifyNullTerminators = true });
 
-		if (file == null) return;
+        CurrentMovie = new MovieViewModel(movie, _timerService);
+        OnPropertyChanged(nameof(CurrentMovie));
+        OnPropertyChanged(nameof(IsMovieLoaded));
+        SaveMovieCommand.NotifyCanExecuteChanged();
+    }
 
-		var bytes = _movieSerializer.Serialize(CurrentMovie.Movie);
+    [RelayCommand(CanExecute = nameof(IsMovieLoaded))]
+    private async Task SaveMovie()
+    {
+        var file = await _filesService.TryPickSaveFileAsync("movie", ("Movie", new[] { "m64" }));
 
-		await using var stream = await file.OpenStreamForWriteAsync();
+        if (file == null) return;
 
-		stream.Write(bytes);
-	}
+        var bytes = _movieSerializer.Serialize(CurrentMovie.Movie);
+
+        await using var stream = await file.OpenStreamForWriteAsync();
+
+        stream.Write(bytes);
+    }
+
+   
 }

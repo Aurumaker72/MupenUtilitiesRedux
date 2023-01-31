@@ -5,32 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MupenUtilitiesRedux.Views.WPF"
         xmlns:userControls="clr-namespace:MupenUtilitiesRedux.Views.WPF.UserControls"
+        xmlns:bindings="clr-namespace:MupenUtilitiesRedux.Views.WPF.Bindings"
+        xmlns:converters="clr-namespace:MupenUtilitiesRedux.Views.WPF.Converters"
         mc:Ignorable="d"
-        Loaded="Control_OnLoaded"
         Title="MainWindow" Height="450" Width="800" d:DataContext="{d:DesignInstance local:MainWindow }">
+    <Window.Resources>
+        <converters:StringEqualityToBooleanConverter x:Key="StringEqualityToBooleanConverter" />
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Menu>
-            <MenuItem Header="{Binding LocalizationManagerViewModel.LocalizationData.File}">
-                <MenuItem Header="{Binding LocalizationManagerViewModel.LocalizationData.Load}"
+            <MenuItem Header="{bindings:LocalizationBinding File}">
+                <MenuItem Header="{bindings:LocalizationBinding Open}"
                           Command="{Binding MainViewModel.LoadMovieCommand}" />
-                <MenuItem Header="{Binding LocalizationManagerViewModel.LocalizationData.Save}"
+                <MenuItem Header="{bindings:LocalizationBinding Save}"
                           Command="{Binding MainViewModel.SaveMovieCommand}" />
-                <MenuItem Header="{Binding LocalizationManagerViewModel.LocalizationData.Languages}">
-                    <MenuItem Header="en-US" Command="{Binding LocalizationManagerViewModel.SetCultureStringCommand}"
-                              CommandParameter="en-US" />
-                    <MenuItem Header="de-DE" Command="{Binding LocalizationManagerViewModel.SetCultureStringCommand}"
-                              CommandParameter="de-DE" />
-                </MenuItem>
+                <Separator></Separator>
+                <MenuItem Header="{bindings:LocalizationBinding Settings}"/>
             </MenuItem>
         </Menu>
-        <TabControl Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <TabItem Header="{Binding LocalizationManagerViewModel.LocalizationData.Header}">
+        <TabControl Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                    IsEnabled="{Binding MainViewModel.IsMovieLoaded}">
+            <TabItem Header="{bindings:LocalizationBinding Header}">
                 <StackPanel Orientation="Vertical">
-                    <GroupBox Header="{Binding LocalizationManagerViewModel.LocalizationData.Creator}">
+                    <GroupBox Header="{bindings:LocalizationBinding Author}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -41,9 +42,9 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <TextBlock Grid.Column="0" Grid.Row="0"
-                                       Text="{Binding LocalizationManagerViewModel.LocalizationData.Author}" />
+                                       Text="{bindings:LocalizationBinding Author}" />
                             <TextBlock Grid.Column="0" Grid.Row="1"
-                                       Text="{Binding LocalizationManagerViewModel.LocalizationData.Description}" />
+                                       Text="{bindings:LocalizationBinding Description}" />
                             <TextBox Grid.Column="1" Grid.Row="0"
                                      Text="{Binding MainViewModel.CurrentMovie.Author, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             <TextBox Grid.Column="1" Grid.Row="1"
@@ -51,7 +52,7 @@
                         </Grid>
                     </GroupBox>
 
-                    <GroupBox Header="{Binding LocalizationManagerViewModel.LocalizationData.Tas}">
+                    <GroupBox Header="{bindings:LocalizationBinding Tas}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -62,9 +63,9 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <TextBlock Grid.Column="0" Grid.Row="0"
-                                       Text="{Binding LocalizationManagerViewModel.LocalizationData.Rerecords}" />
+                                       Text="{bindings:LocalizationBinding Rerecords}" />
                             <TextBlock Grid.Column="0" Grid.Row="1"
-                                       Text="{Binding LocalizationManagerViewModel.LocalizationData.Frames}" />
+                                       Text="{bindings:LocalizationBinding Frames}" />
                             <TextBox Grid.Column="1" Grid.Row="0"
                                      Text="{Binding MainViewModel.CurrentMovie.Rerecords, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             <TextBox Grid.Column="1" Grid.Row="1"
@@ -75,7 +76,7 @@
 
                 </StackPanel>
             </TabItem>
-            <TabItem Header="{Binding LocalizationManagerViewModel.LocalizationData.Frames}">
+            <TabItem Header="{bindings:LocalizationBinding Frames}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -87,7 +88,7 @@
                             Text="{Binding Path=MainViewModel.CurrentMovie.ControllerIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=0}" />
                         <TextBox
                             Text="{Binding Path=MainViewModel.CurrentMovie.SampleIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=0}" />
-                        <Button Content="|| / |>" Command="{Binding MainViewModel.CurrentMovie.ToggleTimerCommand}"/>
+                        <Button Content="|| / |>" Command="{Binding MainViewModel.CurrentMovie.ToggleTimerCommand}" />
                     </StackPanel>
 
                     <Grid Grid.Row="1">

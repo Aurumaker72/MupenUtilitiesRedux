@@ -1,19 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <OutputType>Exe</OutputType>
-    <StartupObject>MupenUtilitiesRedux.Models.Benchmarks.Program</StartupObject>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <OutputType>Exe</OutputType>
+        <StartupObject>MupenUtilitiesRedux.Models.Benchmarks.Program</StartupObject>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.13.2" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="BenchmarkDotNet" Version="0.13.2"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\MupenUtilitiesRedux.Models\MupenUtilitiesRedux.Models.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\MupenUtilitiesRedux.Models\MupenUtilitiesRedux.Models.csproj"/>
+    </ItemGroup>
 
 </Project>

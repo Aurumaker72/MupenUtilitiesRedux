@@ -15,8 +15,8 @@ namespace MupenUtilitiesRedux.Models.Serializers;
 /// </summary>
 public class ReflectionMovieSerializer : IMovieSerializer
 {
-	/// <inheritdoc />
-	public byte[] Serialize(Movie movie, MovieSerializationOptions? movieSerializationOptions = null)
+    /// <inheritdoc />
+    public byte[] Serialize(Movie movie, MovieSerializationOptions? movieSerializationOptions = null)
     {
         movieSerializationOptions ??= new MovieSerializationOptions();
 
@@ -123,8 +123,8 @@ public class ReflectionMovieSerializer : IMovieSerializer
         return bytes;
     }
 
-	/// <inheritdoc />
-	public Movie Deserialize(ReadOnlySpan<byte> bytes, MovieDeserializationOptions? movieDeserializationOptions = null)
+    /// <inheritdoc />
+    public Movie Deserialize(ReadOnlySpan<byte> bytes, MovieDeserializationOptions? movieDeserializationOptions = null)
     {
         movieDeserializationOptions ??= new MovieDeserializationOptions();
 
@@ -190,11 +190,11 @@ public class ReflectionMovieSerializer : IMovieSerializer
         }
 
         // construct and add controllers
-        movie.controllers = new Controller[Movie.MaxControllers];
-        for (var i = 0; i < movie.controllers.Length; i++)
+        movie.Controllers = new Controller[Movie.MaxControllers];
+        for (var i = 0; i < movie.Controllers.Length; i++)
         {
-            movie.controllers[i] = new Controller(movie, i);
-            if (movie.controllers[i].IsPresent) movie.controllers[i].Samples = new List<Sample>();
+            movie.Controllers[i] = new Controller(movie, i);
+            if (movie.Controllers[i].IsPresent) movie.Controllers[i].Samples = new List<Sample>();
         }
 
         // try to find the end index of header

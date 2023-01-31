@@ -14,5 +14,5 @@ public interface ITimerService
 	/// <param name="interval">The time between <see cref="ITimer" /> ticks</param>
 	/// <param name="callback">The method to be invoked on a tick</param>
 	/// <returns>The created <see cref="ITimer" /></returns>
-	public ITimer Create(TimeSpan interval, Action callback);
+	ITimer Create(TimeSpan interval, Action callback);
 }

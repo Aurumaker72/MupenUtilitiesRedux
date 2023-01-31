@@ -5,17 +5,17 @@ namespace MupenUtilitiesRedux.Models.Benchmarks;
 
 public class DeserializationBenchmark
 {
-	private byte[]? data;
+    private byte[]? _data;
 
-	[GlobalSetup]
-	public void Setup()
-	{
-		data = File.ReadAllBytes("movie.m64");
-	}
+    [GlobalSetup]
+    public void Setup()
+    {
+        _data = File.ReadAllBytes("movie.m64");
+    }
 
-	[Benchmark]
-	public Movie Deserialize()
-	{
-		return new ReflectionMovieSerializer().Deserialize(data);
-	}
+    [Benchmark]
+    public Movie Deserialize()
+    {
+        return new ReflectionMovieSerializer().Deserialize(_data);
+    }
 }

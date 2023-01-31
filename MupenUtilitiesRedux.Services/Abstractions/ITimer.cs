@@ -6,17 +6,7 @@
 public interface ITimer
 {
 	/// <summary>
-	///     Pauses the timer
+	///     Whether the timer is resumed
 	/// </summary>
-	public void Pause();
-
-	/// <summary>
-	///     Resumes the timer
-	/// </summary>
-	public void Resume();
-
-	/// <summary>
-	/// Whether the timer is resumed
-	/// </summary>
-	public bool IsResumed { get; }
+	bool IsResumed { get; set; }
 }

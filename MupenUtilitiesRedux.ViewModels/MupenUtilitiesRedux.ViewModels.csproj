@@ -1,30 +1,25 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0-preview1" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0-preview1" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\MupenUtilitiesRedux.Models\MupenUtilitiesRedux.Models.csproj" />
-    <ProjectReference Include="..\MupenUtilitiesRedux.Services\MupenUtilitiesRedux.Services.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\MupenUtilitiesRedux.Models\MupenUtilitiesRedux.Models.csproj" />
+        <ProjectReference Include="..\MupenUtilitiesRedux.Services\MupenUtilitiesRedux.Services.csproj" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <None Update="Cultures\de-DE.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Cultures\en-US.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
-  <ProjectExtensions><VisualStudio><UserProperties cultures_4de-de_1json__JsonSchema="https://appsemble.app/api.json" cultures_4en-us_1json__JsonSchema="https://appsemble.app/api.json" /></VisualStudio></ProjectExtensions>
+    <ProjectExtensions>
+        <VisualStudio>
+            <UserProperties cultures_4de-de_1json__JsonSchema="https://appsemble.app/api.json" cultures_4en-us_1json__JsonSchema="https://appsemble.app/api.json" />
+        </VisualStudio>
+    </ProjectExtensions>
 
 </Project>

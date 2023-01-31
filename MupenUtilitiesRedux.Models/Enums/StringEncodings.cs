@@ -8,9 +8,9 @@ namespace MupenUtilitiesRedux.Models.Enums;
 /// </summary>
 internal enum StringEncodings
 {
-	Invalid,
-	Utf8,
-	Ascii
+    Invalid,
+    Utf8,
+    Ascii
 }
 
 /// <summary>
@@ -31,12 +31,12 @@ internal static class StringEncodingsExtensions
 	///     </para>
 	/// </returns>
 	internal static Encoding? ToEncoding(this StringEncodings stringEncodings)
-	{
-		return stringEncodings switch
-		{
-			StringEncodings.Utf8 => Encoding.UTF8,
-			StringEncodings.Ascii => Encoding.ASCII,
-			_ => null
-		};
-	}
+    {
+        return stringEncodings switch
+        {
+            StringEncodings.Utf8 => Encoding.UTF8,
+            StringEncodings.Ascii => Encoding.ASCII,
+            _ => null
+        };
+    }
 }

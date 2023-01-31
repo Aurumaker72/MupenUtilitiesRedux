@@ -1,10 +1,9 @@
-﻿using MupenUtilitiesRedux.Models.Exceptions;
-using MupenUtilitiesRedux.Models.Options;
+﻿using MupenUtilitiesRedux.Models.Options;
 
 namespace MupenUtilitiesRedux.Models.Interfaces;
 
 /// <summary>
-///     The default <see langword="interface" /> for a service that serializes and de-serializes <see cref="Movie"/>s
+///     The default <see langword="interface" /> for a service that serializes and de-serializes <see cref="Movie" />s
 /// </summary>
 public interface IMovieSerializer
 {
