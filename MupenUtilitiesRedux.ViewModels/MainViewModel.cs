@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MupenUtilitiesRedux.Models;
+using MupenUtilitiesRedux.Models.Interfaces;
 using MupenUtilitiesRedux.Models.Options;
+using MupenUtilitiesRedux.Models.Serializers;
 using MupenUtilitiesRedux.Services;
 using MupenUtilitiesRedux.Services.Abstractions;
 using MupenUtilitiesRedux.ViewModels.Localization;
@@ -18,6 +20,8 @@ public partial class MainViewModel : ObservableObject
 	private readonly LocalizationManagerViewModel _localizationManagerViewModel;
 	private readonly ITimerService _timerService;
 
+	private IMovieSerializer _movieSerializer;
+	
 	public MainViewModel(LocalizationManagerViewModel localizationManagerViewModel, IFilesService filesService,
 		IDialogService dialogService, ITimerService timerService)
 	{
@@ -25,6 +29,7 @@ public partial class MainViewModel : ObservableObject
 		_dialogService = dialogService;
 		_timerService = timerService;
 		_localizationManagerViewModel = localizationManagerViewModel;
+		_movieSerializer = new ReflectionMovieSerializer();
 	}
 
 	public MovieViewModel? CurrentMovie { get; private set; }
@@ -41,7 +46,7 @@ public partial class MainViewModel : ObservableObject
 
 		if (bytes == null) _dialogService.ShowError(_localizationManagerViewModel.LocalizationData.FileReadFailure);
 
-		var movie = MovieFactory.FromBytes(bytes,
+		var movie = _movieSerializer.Deserialize(bytes,
 			new MovieDeserializationOptions { SimplifyNullTerminators = true });
 
 		CurrentMovie = new MovieViewModel(movie, _timerService);
@@ -57,7 +62,7 @@ public partial class MainViewModel : ObservableObject
 
 		if (file == null) return;
 
-		var bytes = MovieFactory.ToBytes(CurrentMovie.Movie);
+		var bytes = _movieSerializer.Serialize(CurrentMovie.Movie);
 
 		await using var stream = await file.OpenStreamForWriteAsync();
 

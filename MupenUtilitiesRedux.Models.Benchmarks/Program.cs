@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using BenchmarkDotNet.Configs;
+using MupenUtilitiesRedux.Models.Serializers;
 
 namespace MupenUtilitiesRedux.Models.Benchmarks;
 
@@ -21,7 +22,7 @@ internal class Program
 		var data = File.ReadAllBytes("movie.m64");
 
 		var stopwatch = Stopwatch.StartNew();
-		for (var i = 0; i < n; i++) _ = MovieFactory.FromBytes(data);
+		for (var i = 0; i < n; i++) _ = new ReflectionMovieSerializer().Deserialize(data);
 		stopwatch.Stop();
 
 		var avg = stopwatch.Elapsed.TotalMilliseconds / n;

@@ -1,4 +1,5 @@
 ﻿using BenchmarkDotNet.Attributes;
+using MupenUtilitiesRedux.Models.Serializers;
 
 namespace MupenUtilitiesRedux.Models.Benchmarks;
 
@@ -15,6 +16,6 @@ public class DeserializationBenchmark
 	[Benchmark]
 	public Movie Deserialize()
 	{
-		return MovieFactory.FromBytes(data);
+		return new ReflectionMovieSerializer().Deserialize(data);
 	}
 }
