@@ -103,19 +103,34 @@ public class ReflectionMovieSerializer : IMovieSerializer
 
 
         // store flatten all controller inputs for connected controllers
-        // TODO: O(1) implementation somehow
-        List<uint> flattenedSamples = new();
 
-        // aggregate...
+        
+        // find length of all flattened samples, by summing connected controllers
+        var flattenedSampleCount = 0;
+        for (var i = 0; i < Movie.MaxControllers; i++)
+        {
+            if (movie.Controllers[i].IsPresent)
+                flattenedSampleCount += movie.Controllers[i].Samples.Count;
+        }
+        
+        var flattenedSamples = new uint[flattenedSampleCount];
+
+        var currentFlattenedSampleIndex = 0;
         for (var i = 0; i < samples; i++)
-        for (var j = 0; j < Movie.MaxControllers; j++)
-            if (movie.Controllers[j].IsPresent)
-                flattenedSamples.Add(movie.Controllers[j].Samples[i].Raw);
-
+        {
+            for (var j = 0; j < Movie.MaxControllers; j++)
+            {
+                if (movie.Controllers[j].IsPresent)
+                {
+                    flattenedSamples[currentFlattenedSampleIndex] = movie.Controllers[j].Samples[i].Raw;
+                    currentFlattenedSampleIndex++;
+                }
+            }
+        }
 
         // convert the flattened samples into bytes
         var flattenedSamplesAsBytes =
-            MemoryMarshal.Cast<uint, byte>(CollectionsMarshal.AsSpan(flattenedSamples))
+            MemoryMarshal.Cast<uint, byte>(new Span<uint>(flattenedSamples))
                 .ToArray();
 
         Array.Copy(flattenedSamplesAsBytes, 0, bytes, endOfHeader, flattenedSamplesAsBytes.Length);

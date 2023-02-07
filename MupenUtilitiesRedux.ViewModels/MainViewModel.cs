@@ -42,9 +42,7 @@ public partial class MainViewModel : ObservableObject
         if (file == null) return;
 
         var bytes = await file.ReadAllBytes();
-
-        _dialogService.ShowError(_localizationService.GetStringOrDefault("Movie load failed"));
-
+        
         var movie = _movieSerializer.Deserialize(bytes,
             new MovieDeserializationOptions { SimplifyNullTerminators = true });
 
