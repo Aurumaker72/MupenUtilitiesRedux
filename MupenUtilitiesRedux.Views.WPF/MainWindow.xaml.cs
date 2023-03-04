@@ -16,11 +16,6 @@ namespace MupenUtilitiesRedux.Views.WPF;
 /// </summary>
 public partial class MainWindow : Window, IDialogService, IDispatcherService, ILocalizationService
 {
-    public static MainViewModel MainViewModel { get; private set; }
-    public static SettingsViewModel SettingsViewModel { get; private set; }
-    internal LocalSettings LocalSettings { get; }
-
-
     public MainWindow()
     {
         InitializeComponent();
@@ -66,6 +61,10 @@ public partial class MainWindow : Window, IDialogService, IDispatcherService, IL
 
         DataContext = this;
     }
+
+    public static MainViewModel MainViewModel { get; private set; }
+    public static SettingsViewModel SettingsViewModel { get; private set; }
+    internal LocalSettings LocalSettings { get; }
 
 
     public void ShowError(string content)

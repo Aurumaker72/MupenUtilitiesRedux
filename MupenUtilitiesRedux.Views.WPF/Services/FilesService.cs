@@ -99,7 +99,6 @@ public sealed class FilesService : IFilesService
         {
             using (var file = System.IO.File.OpenRead(path))
             {
-
             }
 
             return Task.FromResult(true);

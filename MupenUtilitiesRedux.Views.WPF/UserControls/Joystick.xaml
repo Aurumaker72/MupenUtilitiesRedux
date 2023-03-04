@@ -18,23 +18,23 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center" IsHitTestVisible="False">
                 <Ellipse Canvas.Left="-128" Canvas.Top="-128" Width="256" Height="256" Stroke="Black"
-                         StrokeThickness="1" IsHitTestVisible="False"/>
+                         StrokeThickness="1" IsHitTestVisible="False" />
                 <Line
                     Stroke="Black"
                     StrokeThickness="1"
                     X1="0"
                     X2="0"
                     Y1="-128"
-                    Y2="128" 
-                    IsHitTestVisible="False"/>
+                    Y2="128"
+                    IsHitTestVisible="False" />
                 <Line
                     Stroke="Black"
                     StrokeThickness="1"
                     X1="-128"
                     X2="128"
                     Y1="0"
-                    Y2="0" 
-                    IsHitTestVisible="False"/>
+                    Y2="0"
+                    IsHitTestVisible="False" />
                 <Line
                     Stroke="Blue"
                     StrokeThickness="4"
@@ -43,15 +43,15 @@
                     X1="0"
                     X2="{Binding ElementName=Root, Path=X, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                     Y1="0"
-                    Y2="{Binding ElementName=Root, Path=Y, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
-                    IsHitTestVisible="False"/>
+                    Y2="{Binding ElementName=Root, Path=Y, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    IsHitTestVisible="False" />
                 <Ellipse
                     Canvas.Left="{Binding ElementName=Root, Path=X, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource SubtractConverter}, ConverterParameter=5}"
                     Canvas.Top="{Binding ElementName=Root, Path=Y, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource SubtractConverter}, ConverterParameter=5}"
                     Width="10"
                     Height="10"
-                    Fill="Red" 
-                    IsHitTestVisible="False"/>
+                    Fill="Red"
+                    IsHitTestVisible="False" />
             </Canvas>
         </Border>
     </Viewbox>

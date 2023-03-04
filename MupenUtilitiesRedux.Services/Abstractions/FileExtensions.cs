@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace MupenUtilitiesRedux.Services.Abstractions;
+﻿namespace MupenUtilitiesRedux.Services.Abstractions;
 
 /// <summary>
 ///     An extension <see cref="class" /> which provides wrapper functions for <see cref="IFile" />
@@ -13,19 +11,19 @@ public static class FileExtensions
 	/// <param name="file">The <see cref="IFile" /> to be read</param>
 	/// <returns>The <paramref name="file" />'s contents as <see cref="byte" />s</returns>
 	public static async Task<byte[]?> ReadAllBytes(this IFile file)
-	{
-		var stream = await file.OpenStreamForReadAsync();
+    {
+        var stream = await file.OpenStreamForReadAsync();
 
-		if (stream == null) return await Task.FromResult<byte[]?>(null);
+        if (stream == null) return await Task.FromResult<byte[]?>(null);
 
-		var fileProperties = await file.GetPropertiesAsync();
-		var buffer = new byte[fileProperties.Size];
+        var fileProperties = await file.GetPropertiesAsync();
+        var buffer = new byte[fileProperties.Size];
 
-		using (stream)
-		{
-			stream.Read(buffer, 0, buffer.Length);
-		}
+        using (stream)
+        {
+            stream.Read(buffer, 0, buffer.Length);
+        }
 
-		return buffer;
-	}
+        return buffer;
+    }
 }

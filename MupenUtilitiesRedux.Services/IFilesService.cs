@@ -63,7 +63,7 @@ public interface IFilesService
     IAsyncEnumerable<(IFile File, string Metadata)> GetFutureAccessFilesAsync();
 
     /// <summary>
-    ///     Checks whether the file at the specified path is accessible 
+    ///     Checks whether the file at the specified path is accessible
     /// </summary>
     /// <param name="path">The path of the file to retrieve</param>
     /// <returns>Whether the file is accessible</returns>

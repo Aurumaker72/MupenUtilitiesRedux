@@ -6,12 +6,12 @@
 public interface ILocalSettingsService
 {
     /// <summary>
-    /// Raised when a setting's value changes
+    ///     Raised when a setting's value changes
     /// </summary>
     event EventHandler<string> OnSettingChanged;
-    
+
     /// <summary>
-    ///     Retrieves a setting of type <typeparamref name="T"/>
+    ///     Retrieves a setting of type <typeparamref name="T" />
     /// </summary>
     /// <param name="key">The setting's key</param>
     /// <typeparam name="T">The setting value's type</typeparam>

@@ -15,10 +15,10 @@ public partial class MainViewModel : ObservableObject
 {
     private readonly IDialogService _dialogService;
     private readonly IFilesService _filesService;
-    private readonly ITimerService _timerService;
     private readonly ILocalizationService _localizationService;
 
     private readonly IMovieSerializer _movieSerializer;
+    private readonly ITimerService _timerService;
 
     public MainViewModel(IFilesService filesService,
         IDialogService dialogService, ITimerService timerService, ILocalizationService localizationService)
@@ -42,7 +42,7 @@ public partial class MainViewModel : ObservableObject
         if (file == null) return;
 
         var bytes = await file.ReadAllBytes();
-        
+
         var movie = _movieSerializer.Deserialize(bytes,
             new MovieDeserializationOptions { SimplifyNullTerminators = true });
 
@@ -65,6 +65,4 @@ public partial class MainViewModel : ObservableObject
 
         stream.Write(bytes);
     }
-
-   
 }

@@ -10,7 +10,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" d:DataContext="{d:DesignInstance local:MainWindow }">
     <Window.Resources>
-        <converters:StringEqualityToBooleanConverter x:Key="StringEqualityToBooleanConverter" />
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -23,8 +22,8 @@
                           Command="{Binding MainViewModel.LoadMovieCommand}" />
                 <MenuItem Header="{bindings:LocalizationBinding Save}"
                           Command="{Binding MainViewModel.SaveMovieCommand}" />
-                <Separator></Separator>
-                <MenuItem Header="{bindings:LocalizationBinding Settings}"/>
+                <Separator />
+                <MenuItem Header="{bindings:LocalizationBinding Settings}" />
             </MenuItem>
         </Menu>
         <TabControl Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"

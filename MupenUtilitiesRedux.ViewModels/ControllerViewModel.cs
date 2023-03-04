@@ -23,7 +23,7 @@ public class ControllerViewModel : ObservableObject
     }
 
     /// <summary>
-    ///     Whether <see langword="this" /> is present
+    ///     Whether the controller is present
     /// </summary>
     public bool IsPresent
     {
@@ -36,7 +36,7 @@ public class ControllerViewModel : ObservableObject
     }
 
     /// <summary>
-    ///     Whether <see langword="this" /> has a mempak attached
+    ///     Whether a mempak is attached
     /// </summary>
     public bool IsMempakAttached
     {
@@ -49,7 +49,7 @@ public class ControllerViewModel : ObservableObject
     }
 
     /// <summary>
-    ///     Whether <see langword="this" /> has a rumblepak attached
+    ///     Whether a rumblepak is attached
     /// </summary>
     public bool IsRumblepakAttached
     {

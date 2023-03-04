@@ -13,7 +13,7 @@ public class Controller
     public Controller(Movie movie, int index)
     {
         Trace.Assert(index is >= 0 and < Movie.MaxControllers);
-        this._movie = movie;
+        _movie = movie;
         Index = index;
     }
 

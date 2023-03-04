@@ -7,17 +7,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0-preview1" />
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0-preview1"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\MupenUtilitiesRedux.Models\MupenUtilitiesRedux.Models.csproj" />
-        <ProjectReference Include="..\MupenUtilitiesRedux.Services\MupenUtilitiesRedux.Services.csproj" />
+        <ProjectReference Include="..\MupenUtilitiesRedux.Models\MupenUtilitiesRedux.Models.csproj"/>
+        <ProjectReference Include="..\MupenUtilitiesRedux.Services\MupenUtilitiesRedux.Services.csproj"/>
     </ItemGroup>
 
     <ProjectExtensions>
         <VisualStudio>
-            <UserProperties cultures_4de-de_1json__JsonSchema="https://appsemble.app/api.json" cultures_4en-us_1json__JsonSchema="https://appsemble.app/api.json" />
+            <UserProperties cultures_4de-de_1json__JsonSchema="https://appsemble.app/api.json" cultures_4en-us_1json__JsonSchema="https://appsemble.app/api.json"/>
         </VisualStudio>
     </ProjectExtensions>
 
