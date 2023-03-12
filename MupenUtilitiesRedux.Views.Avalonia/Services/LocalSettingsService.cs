@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text.Json;
 using MupenUtilitiesRedux.Services;
 
-namespace MupenUtilitiesRedux.Views.WPF.Services;
+namespace MupenUtilitiesRedux.Views.Avalonia.Services;
 
 internal sealed class LocalSettings : ILocalSettingsService
 {
@@ -62,12 +63,11 @@ internal sealed class LocalSettings : ILocalSettingsService
         // we need to cast and finish those up before returning
 
         // prune all keys which dont exist anymore
-        foreach (var pair in settings)
-            if (!Default._settings.ContainsKey(pair.Key))
-            {
-                settings.Remove(pair.Key);
-                Debug.WriteLine($"Pruned removed key \"{pair.Key}\"");
-            }
+        foreach (var pair in settings.Where(pair => !Default._settings.ContainsKey(pair.Key)))
+        {
+            settings.Remove(pair.Key);
+            Debug.WriteLine($"Pruned removed key \"{pair.Key}\"");
+        }
 
 
         // backwards-compatibility:
@@ -80,7 +80,7 @@ internal sealed class LocalSettings : ILocalSettingsService
                 Debug.WriteLine($"Merged new key \"{defaultPair.Key}\"");
             }
 
-        // cast those bitches
+        // cast everything to the correlated type
         foreach (var pair in settings)
         {
             var intendedType = Default._settings[pair.Key].GetType();

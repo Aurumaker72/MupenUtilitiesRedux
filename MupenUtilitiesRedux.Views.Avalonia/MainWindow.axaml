@@ -1,0 +1,56 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:avalonia="clr-namespace:MupenUtilitiesRedux.Views.Avalonia"
+        xmlns:viewModels="clr-namespace:MupenUtilitiesRedux.ViewModels;assembly=MupenUtilitiesRedux.ViewModels"
+        xmlns:userControls="clr-namespace:MupenUtilitiesRedux.Views.Avalonia.UserControls"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="MupenUtilitiesRedux.Views.Avalonia.MainWindow"
+        x:DataType="avalonia:MainWindow"
+        x:CompileBindings="True"
+        Title="MupenUtilitiesRedux.Views.Avalonia">
+    <Grid RowDefinitions="Auto,*">
+        <Menu>
+            <MenuItem Header="File">
+                <MenuItem Header="Open..." Command="{Binding MainViewModel.OpenCommand}" />
+                <MenuItem Header="Save As..." Command="{Binding MainViewModel.SaveAsCommand}" />
+                <Separator />
+                <MenuItem Header="Exit" Click="ExitMenuItem_OnClick" />
+            </MenuItem>
+        </Menu>
+
+        <TabControl Grid.Row="1" Items="{Binding MainViewModel.OpenMovieViewModels}"
+                    SelectedItem="{Binding MainViewModel.SelectedMovieViewModel, Mode=TwoWay}">
+            <TabControl.ItemTemplate>
+                <DataTemplate DataType="viewModels:MovieViewModel">
+                    <TextBlock Text="{Binding FriendlyName}" />
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
+                <DataTemplate DataType="viewModels:MovieViewModel">
+                    <TabControl>
+                        <TabItem Header="General">
+                            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Author" />
+                                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Author, Mode=TwoWay}" />
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Description" />
+                                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Description, Mode=TwoWay}" />
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Frames" />
+                                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Frames, Mode=TwoWay}" />
+                                <TextBlock Grid.Row="3" Grid.Column="0" Text="VIs" />
+                                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding VisualInterrupts, Mode=TwoWay}" />
+                                <TextBlock Grid.Row="4" Grid.Column="0" Text="Rerecords" />
+                                <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Rerecords, Mode=TwoWay}" />
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Frames">
+                            <userControls:Joystick X="127" Y="40" />
+                        </TabItem>
+                        <TabItem Header="Replacement" />
+                    </TabControl>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
+    </Grid>
+</Window>

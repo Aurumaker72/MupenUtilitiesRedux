@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Windows.Threading;
+using Avalonia.Threading;
 using MupenUtilitiesRedux.Services;
 using MupenUtilitiesRedux.Services.Abstractions;
-using MupenUtilitiesRedux.Views.WPF.Services.Abstractions;
+using MupenUtilitiesRedux.Views.Avalonia.Services.Abstractions;
 
-namespace MupenUtilitiesRedux.Views.WPF.Services;
+namespace MupenUtilitiesRedux.Views.Avalonia.Services;
 
 internal class TimerService : ITimerService
 {
@@ -18,7 +18,7 @@ internal class TimerService : ITimerService
     public ITimer Create(TimeSpan interval, Action callback)
     {
         var dispatcherTimer =
-            new DispatcherTimer(interval, DispatcherPriority.Normal, (o, e) => { callback(); }, _dispatcher);
+            new DispatcherTimer(interval, DispatcherPriority.Normal, (o, e) => { callback(); });
 
         return new Timer(dispatcherTimer);
     }

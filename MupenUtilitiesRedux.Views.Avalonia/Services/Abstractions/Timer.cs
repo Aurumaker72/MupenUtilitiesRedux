@@ -1,7 +1,7 @@
-﻿using System.Windows.Threading;
+﻿using Avalonia.Threading;
 using MupenUtilitiesRedux.Services.Abstractions;
 
-namespace MupenUtilitiesRedux.Views.WPF.Services.Abstractions;
+namespace MupenUtilitiesRedux.Views.Avalonia.Services.Abstractions;
 
 internal class Timer : ITimer
 {

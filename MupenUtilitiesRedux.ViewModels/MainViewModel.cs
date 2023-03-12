@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MupenUtilitiesRedux.Models.Interfaces;
 using MupenUtilitiesRedux.Models.Options;
@@ -31,11 +32,18 @@ public partial class MainViewModel : ObservableObject
         _movieSerializer = new ReflectionMovieSerializer();
     }
 
-    public MovieViewModel? CurrentMovie { get; private set; }
-    public bool IsMovieLoaded => CurrentMovie != null;
+    public ObservableCollection<MovieViewModel> OpenMovieViewModels { get; } = new();
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsMovieSelected))]
+    [NotifyCanExecuteChangedFor(nameof(SaveAsCommand))]
+    private MovieViewModel? _selectedMovieViewModel;
+
+    public bool IsMovieSelected => _selectedMovieViewModel != null;
+
 
     [RelayCommand]
-    private async Task LoadMovie()
+    private async Task Open()
     {
         var file = await _filesService.TryPickOpenFileAsync(new[] { "m64" });
 
@@ -46,20 +54,19 @@ public partial class MainViewModel : ObservableObject
         var movie = _movieSerializer.Deserialize(bytes,
             new MovieDeserializationOptions { SimplifyNullTerminators = true });
 
-        CurrentMovie = new MovieViewModel(movie, _timerService);
-        OnPropertyChanged(nameof(CurrentMovie));
-        OnPropertyChanged(nameof(IsMovieLoaded));
-        SaveMovieCommand.NotifyCanExecuteChanged();
+        var movieViewModel = new MovieViewModel(movie, _timerService, Path.GetFileNameWithoutExtension(file.Path));
+        OpenMovieViewModels.Add(movieViewModel);
+        SelectedMovieViewModel = movieViewModel;
     }
 
-    [RelayCommand(CanExecute = nameof(IsMovieLoaded))]
-    private async Task SaveMovie()
+    [RelayCommand(CanExecute = nameof(IsMovieSelected))]
+    private async Task SaveAs()
     {
         var file = await _filesService.TryPickSaveFileAsync("movie", ("Movie", new[] { "m64" }));
 
         if (file == null) return;
 
-        var bytes = _movieSerializer.Serialize(CurrentMovie.Movie);
+        var bytes = _movieSerializer.Serialize(_selectedMovieViewModel.Movie);
 
         await using var stream = await file.OpenStreamForWriteAsync();
 

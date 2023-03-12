@@ -1,0 +1,45 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:MupenUtilitiesRedux.Views.Avalonia.Converters"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Name="Root"
+             x:Class="MupenUtilitiesRedux.Views.Avalonia.UserControls.Joystick">
+    <UserControl.Resources>
+        <converters:SubtractConverter x:Key="SubtractConverter" />
+        <system:Double x:Key="TipDiameter">10</system:Double>
+    </UserControl.Resources>
+    <Grid Background="Transparent" Width="256" Height="256" PointerMoved="SkiaCanvas_OnPointerMoved"
+          PointerPressed="SkiaCanvas_OnPointerPressed" PointerReleased="SkiaCanvas_OnPointerReleased">
+        <Viewbox Width="256" Height="256">
+            <Canvas RenderTransformOrigin="0,0" Width="256" Height="256" IsHitTestVisible="False">
+                <Ellipse Width="256" Height="256" Stroke="Black"
+                         StrokeThickness="1" IsHitTestVisible="False" />
+                <Line
+                    Stroke="Black"
+                    StrokeThickness="1"
+                    StartPoint="0, 128"
+                    EndPoint="256, 128"/>
+                <Line
+                    Stroke="Black"
+                    StrokeThickness="1"
+                    StartPoint="128, 0"
+                    EndPoint="128, 256"/>
+                <Line
+                    Stroke="Blue"
+                    StrokeThickness="4"
+                    StrokeLineCap="Round"
+                    StartPoint="128,128"
+                    EndPoint="{Binding ElementName=Root, Path=VisualPoint}" />
+                <Ellipse
+                    Canvas.Left="{Binding ElementName=Root, Path=EllipseVisualPoint.X}"
+                    Canvas.Top="{Binding ElementName=Root, Path=EllipseVisualPoint.Y}"
+                    Width="{StaticResource TipDiameter}"
+                    Height="{StaticResource TipDiameter}"
+                    Fill="Red" />
+            </Canvas>
+        </Viewbox>
+    </Grid>
+</UserControl>

@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Microsoft.Win32;
+using Avalonia.Controls;
 using MupenUtilitiesRedux.Services;
 using MupenUtilitiesRedux.Services.Abstractions;
-using File = MupenUtilitiesRedux.Views.WPF.Services.Abstractions.File;
 
-namespace MupenUtilitiesRedux.Views.WPF.Services;
+namespace MupenUtilitiesRedux.Views.Avalonia.Services;
 
 /// <summary>
 ///     A <see langword="class" /> that implements the <see cref="IFilesService" /> <see langword="interface" /> using
@@ -25,7 +25,7 @@ public sealed class FilesService : IFilesService
     /// <inheritdoc />
     public async Task<IFile> GetFileFromPathAsync(string path)
     {
-        return new File(path);
+        return new Abstractions.File(path);
     }
 
     /// <inheritdoc />
@@ -51,7 +51,7 @@ public sealed class FilesService : IFilesService
 
         if (!System.IO.File.Exists(path)) System.IO.File.Create(path);
 
-        return new File(path);
+        return new Abstractions.File(path);
     }
 
     /// <inheritdoc />
@@ -59,16 +59,17 @@ public sealed class FilesService : IFilesService
     {
         var fileDialog = new OpenFileDialog
         {
-            AddExtension = true,
-            CheckFileExists = true,
-            CheckPathExists = true
-            //Filter = 
+            Filters = new List<FileDialogFilter>
+            {
+                new()
+                {
+                    Extensions = extensions.ToList()
+                }
+            }
         };
-        var result = fileDialog.ShowDialog();
+        var result = await fileDialog.ShowAsync(MainWindow.Window);
 
-        if (result != null && result.Value)
-            return new File(fileDialog.FileName);
-        return null;
+        return result is { Length: > 0 } ? new Abstractions.File(result[0]) : null;
     }
 
     /// <inheritdoc />
@@ -76,14 +77,18 @@ public sealed class FilesService : IFilesService
     {
         var fileDialog = new SaveFileDialog
         {
-            AddExtension = true
-            //Filter = 
+            Filters = new List<FileDialogFilter>
+            {
+                new()
+                {
+                    Extensions = fileType.Extensions.ToList(),
+                    Name = fileType.Name
+                }
+            }
         };
-        var result = fileDialog.ShowDialog();
+        var result = await fileDialog.ShowAsync(MainWindow.Window);
 
-        if (result != null && result.Value)
-            return new File(fileDialog.FileName);
-        return null;
+        return result != null ? new Abstractions.File(result) : null;
     }
 
     /// <inheritdoc />
@@ -97,7 +102,7 @@ public sealed class FilesService : IFilesService
     {
         try
         {
-            using (var file = System.IO.File.OpenRead(path))
+            using (var file = File.OpenRead(path))
             {
             }
 

@@ -3,7 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using MupenUtilitiesRedux.Services.Abstractions;
 
-namespace MupenUtilitiesRedux.Views.WPF.Services.Abstractions;
+namespace MupenUtilitiesRedux.Views.Avalonia.Services.Abstractions;
 
 /// <summary>
 ///     A <see langword="class" /> implementing a WPF version of <see cref="IFile" />.

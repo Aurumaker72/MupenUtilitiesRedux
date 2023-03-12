@@ -15,16 +15,16 @@ public partial class MovieViewModel : ObservableObject
     private readonly ITimer _timer;
     private readonly ITimerService _timerService;
     internal readonly Movie Movie;
-
-
+    
     private int _controllerIndex;
 
     private int _sampleIndex;
 
-    internal MovieViewModel(Movie movie, ITimerService timerService)
+    internal MovieViewModel(Movie movie, ITimerService timerService, string friendlyName)
     {
         Movie = movie;
         _timerService = timerService;
+        FriendlyName = friendlyName;
 
         for (var i = 0; i < movie.ReadOnlyControllers.Count; i++)
             _controllerViewModels[i] = new ControllerViewModel(movie.ReadOnlyControllers[i]);
@@ -32,6 +32,8 @@ public partial class MovieViewModel : ObservableObject
         _timer = _timerService.Create(TimeSpan.FromMilliseconds(1000d / 30d), () => { SampleIndex++; });
     }
 
+    public string FriendlyName { get; }
+    
     public int ControllerIndex
     {
         get => _controllerIndex;
