@@ -54,7 +54,7 @@ public partial class MainViewModel : ObservableObject
         var movie = _movieSerializer.Deserialize(bytes,
             new MovieDeserializationOptions { SimplifyNullTerminators = true });
 
-        var movieViewModel = new MovieViewModel(movie, _timerService, Path.GetFileNameWithoutExtension(file.Path));
+        var movieViewModel = new MovieViewModel(movie, Path.GetFileNameWithoutExtension(file.Path));
         OpenMovieViewModels.Add(movieViewModel);
         SelectedMovieViewModel = movieViewModel;
     }

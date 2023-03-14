@@ -20,68 +20,36 @@ public partial class Joystick : UserControl, INotifyPropertyChanged
     public sbyte X
     {
         get => GetValue(XProperty);
-        set
-        {
-            SetValue(XProperty, value);
-            RaisePropertyChanged(nameof(VisualPoint));
-            RaisePropertyChanged(nameof(EllipseVisualPoint));
-        }
+        set => SetValue(XProperty, value);
     }
 
     public sbyte Y
     {
         get => GetValue(YProperty);
-        set
-        {
-            SetValue(YProperty, value);
-            RaisePropertyChanged(nameof(VisualPoint));
-            RaisePropertyChanged(nameof(EllipseVisualPoint));
-        }
+        set => SetValue(YProperty, value);
     }
 
     public Point VisualPoint => new(128 + X, 128 + Y);
-    public Point EllipseVisualPoint => new(128 + X - (double)(Resources["TipDiameter"]) / 2, 128 + Y - (double)(Resources["TipDiameter"]) / 2);
+    public Point EllipseVisualPoint => new(128 + X - (double)Resources["TipDiameter"]! / 2, 128 + Y -(double)Resources["TipDiameter"]! / 2);
 
     public Joystick()
     {
         InitializeComponent();
+        XProperty.Changed.Subscribe(delegate
+        {
+            RaisePropertyChanged(nameof(VisualPoint));
+            RaisePropertyChanged(nameof(EllipseVisualPoint));
+        });
+        YProperty.Changed.Subscribe(delegate
+        {
+            RaisePropertyChanged(nameof(VisualPoint));
+            RaisePropertyChanged(nameof(EllipseVisualPoint));
+        });
     }
-
-
+    
     private void InitializeComponent()
     {
         AvaloniaXamlLoader.Load(this);
-    }
-
-    private void SkiaCanvas_OnRenderSkia(SKCanvas obj)
-    {
-        obj.DrawLine(0f, 256f / 2f, 256f, 256f / 2f, new SKPaint
-        {
-            Color = new SKColor(0, 0, 0),
-            StrokeWidth = 2f
-        });
-        obj.DrawLine(256f / 2f, 0, 256f / 2f, 256f, new SKPaint
-        {
-            Color = new SKColor(0, 0, 0),
-            StrokeWidth = 2f
-        });
-        obj.DrawCircle(256f / 2f, 256f / 2f, 128f, new SKPaint
-        {
-            Color = new SKColor(0, 0, 0),
-            Style = SKPaintStyle.Stroke,
-            StrokeWidth = 2f
-        });
-
-        obj.DrawLine(256f / 2f, 256f / 2f, X, Y, new SKPaint
-        {
-            Color = new SKColor(0, 0, 255),
-            StrokeWidth = 2f
-        });
-
-        obj.DrawCircle(X, Y, 4f, new SKPaint
-        {
-            Color = new SKColor(255, 0, 0)
-        });
     }
 
     private void SkiaCanvas_OnPointerMoved(object? sender, PointerEventArgs e)

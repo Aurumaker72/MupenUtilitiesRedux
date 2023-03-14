@@ -13,64 +13,22 @@ public partial class MovieViewModel : ObservableObject
 {
     private readonly ControllerViewModel[] _controllerViewModels = new ControllerViewModel[Movie.MaxControllers];
     private readonly ITimer _timer;
-    private readonly ITimerService _timerService;
     internal readonly Movie Movie;
     
-    private int _controllerIndex;
-
-    private int _sampleIndex;
-
-    internal MovieViewModel(Movie movie, ITimerService timerService, string friendlyName)
+    internal MovieViewModel(Movie movie, string friendlyName)
     {
         Movie = movie;
-        _timerService = timerService;
         FriendlyName = friendlyName;
 
         for (var i = 0; i < movie.ReadOnlyControllers.Count; i++)
             _controllerViewModels[i] = new ControllerViewModel(movie.ReadOnlyControllers[i]);
 
-        _timer = _timerService.Create(TimeSpan.FromMilliseconds(1000d / 30d), () => { SampleIndex++; });
+        SampleScrubberViewModel = new(this);
     }
 
-    public string FriendlyName { get; }
+    public SampleScrubberViewModel SampleScrubberViewModel { get; }
     
-    public int ControllerIndex
-    {
-        get => _controllerIndex;
-        set
-        {
-            SetProperty(ref _controllerIndex, Math.Clamp(value, 0, ControllerViewModels.Count));
-            OnPropertyChanged(nameof(SelectedControllerViewModel));
-            OnPropertyChanged(nameof(SampleIndex));
-            OnPropertyChanged(nameof(SelectedSampleViewModel));
-        }
-    }
-
-    public ControllerViewModel? SelectedControllerViewModel => ControllerViewModels[ControllerIndex];
-
-    public int SampleIndex
-    {
-        get => _sampleIndex;
-        set
-        {
-            if (SelectedControllerViewModel?.SampleViewModels == null) return;
-            SetProperty(ref _sampleIndex, Math.Clamp(value, 0, SelectedControllerViewModel.SampleViewModels.Count));
-            OnPropertyChanged(nameof(SelectedSampleViewModel));
-        }
-    }
-
-    public SampleViewModel? SelectedSampleViewModel
-    {
-        get
-        {
-            if (SelectedControllerViewModel?.SampleViewModels == null) return null;
-
-            return SampleIndex >= SelectedControllerViewModel.SampleViewModels.Count
-                ? null
-                : SelectedControllerViewModel.SampleViewModels[SampleIndex];
-        }
-    }
-
+    public string FriendlyName { get; }
 
     /// <summary>
     ///     The magic cookie value

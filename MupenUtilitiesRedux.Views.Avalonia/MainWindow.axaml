@@ -5,6 +5,7 @@
         xmlns:avalonia="clr-namespace:MupenUtilitiesRedux.Views.Avalonia"
         xmlns:viewModels="clr-namespace:MupenUtilitiesRedux.ViewModels;assembly=MupenUtilitiesRedux.ViewModels"
         xmlns:userControls="clr-namespace:MupenUtilitiesRedux.Views.Avalonia.UserControls"
+        xmlns:markupExtensions="clr-namespace:MupenUtilitiesRedux.Views.Avalonia.MarkupExtensions"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="MupenUtilitiesRedux.Views.Avalonia.MainWindow"
         x:DataType="avalonia:MainWindow"
@@ -45,7 +46,22 @@
                             </Grid>
                         </TabItem>
                         <TabItem Header="Frames">
-                            <userControls:Joystick X="127" Y="40" />
+                            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto, *">
+
+                                <userControls:Joystick X="{Binding SampleScrubberViewModel.SelectedSampleViewModel.X, Mode=TwoWay}" Y="{Binding SampleScrubberViewModel.SelectedSampleViewModel.Y, Mode=TwoWay}" />
+
+                                <Grid Grid.Row="0" Grid.Column="1" RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="Auto, Auto, Auto">
+                                    <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" ColumnDefinitions="Auto, *, Auto">
+                                        <Button Grid.Column="0" Content="&lt;" Command="{Binding SampleScrubberViewModel.IncrementSampleIndexCommand}" CommandParameter="{markupExtensions:Int32Markup -1}"/>
+                                        <TextBox Grid.Column="1" Text="{Binding SampleScrubberViewModel.SelectedSampleIndex, Mode=TwoWay}"/>
+                                        <Button Grid.Column="2" Content="&gt;" Command="{Binding SampleScrubberViewModel.IncrementSampleIndexCommand}" CommandParameter="{markupExtensions:Int32Markup 1}"/>
+                                    </Grid>
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="X" />
+                                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SampleScrubberViewModel.SelectedSampleViewModel.X, Mode=TwoWay}" />
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Y" />
+                                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SampleScrubberViewModel.SelectedSampleViewModel.Y, Mode=TwoWay}" />
+                                </Grid>
+                            </Grid>
                         </TabItem>
                         <TabItem Header="Replacement" />
                     </TabControl>
