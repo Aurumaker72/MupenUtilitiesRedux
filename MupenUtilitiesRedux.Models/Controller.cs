@@ -59,7 +59,7 @@ public class Controller
     public List<Sample>? Samples { get; set; }
 }
 
-file static class ControllerHelper
+internal static class ControllerHelper
 {
     public static bool GetIsPresent(uint controllerFlags, int controllerIndex)
     {

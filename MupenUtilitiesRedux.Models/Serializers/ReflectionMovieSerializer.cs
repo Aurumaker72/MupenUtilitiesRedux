@@ -192,7 +192,7 @@ public class ReflectionMovieSerializer : IMovieSerializer
                                 : throw new MovieDeserializationException($"Can't resolve type \"{propertyType}\"");
 
             if (computedValue == null)
-                throw new UnreachableException(
+                throw new Exception(
                     $"ComputedValue was null, but no {nameof(MovieDeserializationException)} was thrown");
 
             property.SetValue(movie, computedValue);

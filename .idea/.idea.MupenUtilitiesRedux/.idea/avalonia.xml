@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="MupenUtilitiesRedux.Views.Avalonia/Dialogs/ErrorDialog.axaml" value="MupenUtilitiesRedux.Views.Avalonia/MupenUtilitiesRedux.Views.Avalonia.csproj" />
+        <entry key="MupenUtilitiesRedux.Views.Avalonia/MainWindow.axaml" value="MupenUtilitiesRedux.Views.Avalonia/MupenUtilitiesRedux.Views.Avalonia.csproj" />
+        <entry key="MupenUtilitiesRedux.Views.Avalonia/UserControls/Joystick.axaml" value="MupenUtilitiesRedux.Views.Avalonia/MupenUtilitiesRedux.Views.Avalonia.csproj" />
+        <entry key="MupenUtilitiesRedux.Views.Avalonia/UserControls/Joystick.xaml" value="MupenUtilitiesRedux.Views.Avalonia/MupenUtilitiesRedux.Views.Avalonia.csproj" />
+        <entry key="MupenUtilitiesRedux.Views.Avalonia/UserControls/Joysticka.xaml" value="MupenUtilitiesRedux.Views.Avalonia/MupenUtilitiesRedux.Views.Avalonia.csproj" />
+        <entry key="MupenUtilitiesRedux.Views.Avalonia/UserControls/MovieView.axaml" value="MupenUtilitiesRedux.Views.Avalonia/MupenUtilitiesRedux.Views.Avalonia.csproj" />
+        <entry key="MupenUtilitiesRedux.Views.Avalonia/UserControls/SkiaCanvas.axaml" value="MupenUtilitiesRedux.Views.Avalonia/MupenUtilitiesRedux.Views.Avalonia.csproj" />
+      </map>
+    </option>
+  </component>
+</project>

@@ -15,7 +15,7 @@ public partial class MovieViewModel : ObservableObject
     private readonly ITimer _timer;
     internal readonly Movie Movie;
     
-    internal MovieViewModel(Movie movie, string friendlyName)
+    public MovieViewModel(Movie movie, string friendlyName)
     {
         Movie = movie;
         FriendlyName = friendlyName;

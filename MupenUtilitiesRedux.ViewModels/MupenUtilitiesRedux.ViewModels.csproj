@@ -1,9 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFrameworks>net7.0;net6.0</TargetFrameworks>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+	<AssemblyVersion>1.0.2</AssemblyVersion>
+	<PackageVersion>1.0.2</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
@@ -14,6 +16,8 @@
         <ProjectReference Include="..\MupenUtilitiesRedux.Models\MupenUtilitiesRedux.Models.csproj" />
         <ProjectReference Include="..\MupenUtilitiesRedux.Services\MupenUtilitiesRedux.Services.csproj" />
     </ItemGroup>
+
+
 
     <ProjectExtensions>
         <VisualStudio>
